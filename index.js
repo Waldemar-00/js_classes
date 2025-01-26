@@ -31,7 +31,8 @@ const Bucket = function ( storeName )
 {
     this.storeName = storeName
     this.supplies = []
-    this.addSupply = function ( supplyName, amount )
+}
+Bucket.prototype.addSupply = function ( supplyName, amount )
     {
         if ( this.supplies.find(sp => sp.supplyName === supplyName ) )
         {
@@ -44,21 +45,19 @@ const Bucket = function ( storeName )
             })
 
     }
-    this.increaseSupply = function ( supplyName, number ) {
+Bucket.prototype.increaseSupply = function ( supplyName, number ) {
         this.supplies.forEach( sup =>
         {
             if (sup.supplyName === supplyName) sup.amount = sup.amount + number
         })
-    }
-    this.decreaseSupply = function ( supplyName, number ) {
-        this.supplies.forEach( ( sup, index ) =>
-        {
-            if ( sup.supplyName === supplyName ) sup.amount = sup.amount - number
-            if ( sup.amount <= 0 ) this.supplies.splice( index, 1 )
-        })
-    }
 }
-
+Bucket.prototype.decreaseSupply = function ( supplyName, number ) {
+    this.supplies.forEach( ( sup, index ) =>
+    {
+        if ( sup.supplyName === supplyName ) sup.amount = sup.amount - number
+        if ( sup.amount <= 0 ) this.supplies.splice( index, 1 )
+    })
+}
 const cart = new Bucket( 'Some Store' )
 cart.addSupply( 'Samsung', 2 )
 cart.increaseSupply( 'Samsung', 5 )
@@ -68,3 +67,4 @@ cart.decreaseSupply( 'Samsung', 7 )
 cart.addSupply( 'Samsung', 3 )
 cart.decreaseSupply( 'Samsung', 6 )
 console.log( cart )
+console.log( cart.__proto__ === Bucket.prototype )
