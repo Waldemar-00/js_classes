@@ -1,62 +1,26 @@
-//! set and get in OBJECT
+console.log( Number.MAX_SAFE_INTEGER )
+console.log( new Number() ) //* 0
 
-const store = {
-
-    supplies: [],
-    addSupplies (item)
-    {
-        this.supplies.push( item )
-    },
-    get accessSupplies ()
-    {
-        return this.supplies
-    },
-    set accessSupplies ( sup )
-    {
-        this.supplies.push( sup )
-    }
-}
-
-
-console.log( store.accessSupplies )
-store.accessSupplies = 'Banana'
-console.log( store.accessSupplies )
-store.addSupplies( 'Apple' )
-console.log( store.accessSupplies )
-
-console.log('CLASS _____________________ ')
-
-class Store
+class Test
 {
-    #supplies = []
-    addSupplies (item)
-    {
-        this.#supplies.push( item )
-    }
-    get accessSupplies ()
-    {
-        return this.#supplies
-    }
-    set accessSupplies ( sup )
-    {
-        if ( Array.isArray( sup ) )
-        {
-            this.#supplies.push( ...sup )
-        } else if ( typeof sup === 'string' )
-        {
-            this.#supplies.push( sup )
-        } else {
-            console.log('Supplies can be string or array, please enter correct')
-        }
+    static variable = 'STATIC VARIABLE'
+    static hello () { console.log( "Hello" ) }
+    greeting () { console.log( "Hello" ) }
 
+    static {
+        const b = 17
+        this.variable = b
+        console.log( 'Static block scope has changed static variable' )
+        //! That scope works without any calls
     }
 }
 
-const classStore = new Store()
-console.log( classStore.accessSupplies )
-classStore.accessSupplies = 'Banana'
-console.log( classStore.accessSupplies )
-classStore.addSupplies( 'Apple' )
-classStore.accessSupplies =['Eggs', 'Bread']
-console.log( classStore.accessSupplies )
-classStore.accessSupplies = { kiwi: 12 }
+Test.hello()
+// new Test().greeting()
+console.log( Test )
+console.log( Test.variable )
+
+const TestFn = function () { }
+TestFn.hello = function () { console.log( "Hello" ) }
+console.log( TestFn )
+TestFn.hello()
