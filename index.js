@@ -1,58 +1,28 @@
-'use strict'
-//! Abstraction and encapsulation, inheritance ES5
-//! Abstraction and encapsulation
-class Film
+class Book
 {
-    #name
-    #author
-    #lenght
-    rating
-    constructor ( name, author, lenght )
+    constructor ( title, author )
     {
-        this.#name = name
-        this.#author = author
-        this.#lenght = lenght
+        this.title = title
+        this.author = author
     }
-    get name () { return this.#name }
-    get author () { return this.#author }
-    get length () { return this.#lenght }
+    buy() { console.log('BUY') }
 }
 
-//!  Inheritance ES5
-
-const Book = function ( title, author )
+class AudioBook extends Book
 {
-    this.title = title
-    this.author = author
-}
-Book.prototype.buy = function ()
-{
-    console.log('BUY')
-}
-
-const AudioBook = function ( title, author, timeLenght )
-{
-    Book.call( this, title, author )
-    this.timeLenght = timeLenght
-}
-
-//!__________________________________________________
-
-AudioBook.prototype = Object.create( Book.prototype )
-AudioBook.prototype.constructor = AudioBook
-
-//!__________________________________________________
-
-AudioBook.prototype.log = function ()
-{
-    console.log( `${ this.title }: ${ this.timeLenght }` )
+    constructor ( title, author, timeLength )
+    {
+        super( title, author )
+        this.timeLength = timeLength
+    }
+    log ()
+    {
+        console.log( `${ this.title }: ${ this.timeLength }` )
+    }
 }
 
 const audiobook = new AudioBook( 'Lord of the Rings', 'Tolkien', 21 * 60 )
 
 audiobook.log()
-console.log( audiobook )
 audiobook.buy()
-
-console.log( audiobook instanceof AudioBook ) //! TRUE
-console.log( audiobook instanceof Book ) //! TRUE
+console.log( audiobook )
