@@ -1,26 +1,58 @@
 'use strict'
-
-
-const User = {
-    init (name, email)
+//! Abstraction and encapsulation, inheritance ES5
+//! Abstraction and encapsulation
+class Film
+{
+    #name
+    #author
+    #lenght
+    rating
+    constructor ( name, author, lenght )
     {
-        this.name = name
-        this.email = email
-    },
-    log ()
-    {
-        console.log('Hi, User')
+        this.#name = name
+        this.#author = author
+        this.#lenght = lenght
     }
+    get name () { return this.#name }
+    get author () { return this.#author }
+    get length () { return this.#lenght }
 }
 
-const user_1 = Object.create( User )
+//!  Inheritance ES5
 
-console.log( user_1 )
-console.log( user_1.__proto__ === User )
-user_1.init( 'Anton', 'user@gmail.com' )
-console.log( user_1 )
+const Book = function ( title, author )
+{
+    this.title = title
+    this.author = author
+}
+Book.prototype.buy = function ()
+{
+    console.log('BUY')
+}
 
-const user_2 = Object.create( User )
-console.log( user_2, 'user_2' )
-const user_test = Object.create( user_1 )
-console.log( user_test, 'user_test' )
+const AudioBook = function ( title, author, timeLenght )
+{
+    Book.call( this, title, author )
+    this.timeLenght = timeLenght
+}
+
+//!__________________________________________________
+
+AudioBook.prototype = Object.create( Book.prototype )
+AudioBook.prototype.constructor = AudioBook
+
+//!__________________________________________________
+
+AudioBook.prototype.log = function ()
+{
+    console.log( `${ this.title }: ${ this.timeLenght }` )
+}
+
+const audiobook = new AudioBook( 'Lord of the Rings', 'Tolkien', 21 * 60 )
+
+audiobook.log()
+console.log( audiobook )
+audiobook.buy()
+
+console.log( audiobook instanceof AudioBook ) //! TRUE
+console.log( audiobook instanceof Book ) //! TRUE
