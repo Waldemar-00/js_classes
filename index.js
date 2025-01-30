@@ -1,59 +1,47 @@
-class Sword
+'use strict'
+//! __BUILDER
+
+class Wallet  //! __Chaining
 {
-    power = 10
-    hit ()
+    balance = 0
+
+    add ( sum )
     {
-        return this.power
+        this.balance += sum
+        return this
     }
-}
-class Enemy
-{
-    #health = 100
-    getDamage ( power )
+    remove ( sum )
     {
-        this.#health = this.#health - power
+        this.balance -= sum
+        return this
     }
 }
 
-class Ork extends Enemy
+const wallet = new Wallet()
+
+wallet.add( 1200 ).add( 900 ).add( 400 ).remove( 350 )
+console.log( wallet.balance )
+
+class Builder
 {
-    #health = 100
-    #count = 0
-    getDamage ( power )
+    house = {}
+    addRoof ()
     {
-        if ( this.#health <= 0 )
-        {
-            console.log( 'Ork is dead!' )
-            this.#count = 0
-            this.#health = 100
-            return
-        }
-        if ( this.#count % 2 === 0 )
-        {
-            console.log('You hit the Ork!')
-            this.#health = this.#health - power
-            this.#count++
-            console.log( `Ork health is: ${ this.#health }` )
-        } else
-        {
-            console.log( 'You have missed!..' )
-            this.#count++
-        }
+        this.house.roof = 'ROOF'
+        return this
     }
+    addDoor ()
+    {
+        this.house.door = 'DOOR'
+        return this
+    }
+    addWalls ()
+    {
+        this.house.walls = 'WALLS'
+        return this
+    }
+    //...ect
+    execute(){ return this.house }
 }
 
-const sword = new Sword()
-const ork = new Ork()
-console.log( ork )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
-ork.getDamage( sword.hit() )
+console.log( new Builder().addWalls().addRoof().addDoor().execute() )
