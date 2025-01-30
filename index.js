@@ -1,46 +1,59 @@
-class Book
+class Sword
 {
-    constructor ( title, author )
+    power = 10
+    hit ()
     {
-        this.title = title
-        this.author = author
+        return this.power
     }
-    buy () { console.log( 'BUY' ) }
-    info() { console.log(`${this.title} - ${this.author}` ) }
 }
-const book = new Book( 'Lord of the Rings', 'Tolkien' )
-book.info()
-
-class AudioBook extends Book
+class Enemy
 {
-    constructor ( title, author, timeLength )
+    #health = 100
+    getDamage ( power )
     {
-        super( title, author )
-        this.timeLength = timeLength
-    }
-    log ()
-    {
-        console.log( `${ this.title }: ${ this.timeLength }` )
+        this.#health = this.#health - power
     }
 }
 
-const audiobook = new AudioBook( 'Lord of the Rings', 'Tolkien', 21 * 60 )
-
-// audiobook.log()
-// audiobook.buy()
-// console.log( audiobook )
-
-class Ebook extends Book
+class Ork extends Enemy
 {
-    constructor ( title, author, size )
+    #health = 100
+    #count = 0
+    getDamage ( power )
     {
-        super( title, author )
-        this.size = size
-    }
-    info ()
-    {
-        console.log( `${ this.title }: ${ this.author }. It size is: ${this.size}mb` ) //! OVERRIDE
+        if ( this.#health <= 0 )
+        {
+            console.log( 'Ork is dead!' )
+            this.#count = 0
+            this.#health = 100
+            return
+        }
+        if ( this.#count % 2 === 0 )
+        {
+            console.log('You hit the Ork!')
+            this.#health = this.#health - power
+            this.#count++
+            console.log( `Ork health is: ${ this.#health }` )
+        } else
+        {
+            console.log( 'You have missed!..' )
+            this.#count++
+        }
     }
 }
-const ebook = new Ebook( 'Lord of the Rings', 'Tolkien', 1020 )
-ebook.info()
+
+const sword = new Sword()
+const ork = new Ork()
+console.log( ork )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
+ork.getDamage( sword.hit() )
