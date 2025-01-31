@@ -1,24 +1,23 @@
 'use strict'
 
-//! Liskov Substitution Principle
+//! Interface Segregation Principle
 
-class User
+
+class Weapon
 {
-    #role = 'user'
-    getRole() { return this.#role }
-}
-class Admin extends User
-{
-    #role = [ 'user', 'admin' ]
-    getRole ()
-    {
-        return this.#role.join(', ')
-    }
-}
-function logRole (role)
-{
-    console.log( 'Role: ' + role.toUpperCase() + '!')
+    cost
+    //! hit () {}
+    //! shoot(){}
+    //! ONLY common methods or properties___________________!!!
+    damage() {}
 }
 
-logRole( new User().getRole() )
-logRole( new Admin().getRole() )
+class Sword extends Weapon
+{
+    hit() { this.damage() }
+}
+
+class Rifle extends Weapon
+{
+    shoot(){ this.damage() }
+}
