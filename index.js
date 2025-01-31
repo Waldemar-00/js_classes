@@ -1,32 +1,24 @@
 'use strict'
 
-//! OPEN_CLOSED Principle
+//! Liskov Substitution Principle
 
-class Treasure
+class User
 {
-    value = 0
+    #role = 'user'
+    getRole() { return this.#role }
 }
-
-class Coin extends Treasure
+class Admin extends User
 {
-    value = 10
-}
-
-class Cristal extends Treasure
-{
-    value = 20
-}
-
-class Brilliant extends Treasure
-{
-    value = 50
-}
-
-class Inventory
-{
-    #score = 0
-    riches ( treasure )
+    #role = [ 'user', 'admin' ]
+    getRole ()
     {
-       this.#score += treasure
+        return this.#role.join(', ')
     }
 }
+function logRole (role)
+{
+    console.log( 'Role: ' + role.toUpperCase() + '!')
+}
+
+logRole( new User().getRole() )
+logRole( new Admin().getRole() )
