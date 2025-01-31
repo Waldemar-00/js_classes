@@ -1,23 +1,32 @@
 'use strict'
 
-//! Interface Segregation Principle
+//! Dependency Inversion Principle
 
-
-class Weapon
+class DB
 {
-    cost
-    //! hit () {}
-    //! shoot(){}
-    //! ONLY common methods or properties___________________!!!
-    damage() {}
+    save ( items )
+    {
+        console.log( `Saved: ${ items }` )
+    }
 }
 
-class Sword extends Weapon
+class MongoDB extends DB
 {
-    hit() { this.damage() }
+    save ( items )
+    {
+        console.log( `Saved to MongoDB: ${ items }` )
+    }
+}
+class TodoList
+{
+    items = [ 1, 2, 3 ]
+    //! db = new DB() we have to rewrite each time when we want to change a DB
+    constructor ( db )
+    {
+        this.db = db
+    }
+    saveToDB () { this.db.save( this.items ) }
 }
 
-class Rifle extends Weapon
-{
-    shoot(){ this.damage() }
-}
+new TodoList( new DB ).saveToDB()
+new TodoList( new MongoDB ).saveToDB()
