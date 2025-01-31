@@ -1,31 +1,32 @@
 'use strict'
 
-//! Single Responsibility Principle
+//! OPEN_CLOSED Principle
 
-class Character
+class Treasure
 {
-    #health = 100
-    #inventories = []
-    addInventory (item)
-    {
-        this.#inventories.push(item)
-    }
-    damage (damage)
-    {
-        this.#health -= damage
-    }
+    value = 0
 }
 
-
-class DB
+class Coin extends Treasure
 {
-    saveLocal ( charecter )
-    {
-        localStorage.setItem('charecter', charecter)
-    }
+    value = 10
+}
 
-    saveOnServer ( charecter )
+class Cristal extends Treasure
+{
+    value = 20
+}
+
+class Brilliant extends Treasure
+{
+    value = 50
+}
+
+class Inventory
+{
+    #score = 0
+    riches ( treasure )
     {
-        //*...
+       this.#score += treasure
     }
 }
