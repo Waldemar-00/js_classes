@@ -1,47 +1,31 @@
 'use strict'
-//! __BUILDER
 
-class Wallet  //! __Chaining
+//! Single Responsibility Principle
+
+class Character
 {
-    balance = 0
-
-    add ( sum )
+    #health = 100
+    #inventories = []
+    addInventory (item)
     {
-        this.balance += sum
-        return this
+        this.#inventories.push(item)
     }
-    remove ( sum )
+    damage (damage)
     {
-        this.balance -= sum
-        return this
+        this.#health -= damage
     }
 }
 
-const wallet = new Wallet()
 
-wallet.add( 1200 ).add( 900 ).add( 400 ).remove( 350 )
-console.log( wallet.balance )
-
-class Builder
+class DB
 {
-    house = {}
-    addRoof ()
+    saveLocal ( charecter )
     {
-        this.house.roof = 'ROOF'
-        return this
+        localStorage.setItem('charecter', charecter)
     }
-    addDoor ()
-    {
-        this.house.door = 'DOOR'
-        return this
-    }
-    addWalls ()
-    {
-        this.house.walls = 'WALLS'
-        return this
-    }
-    //...ect
-    execute(){ return this.house }
-}
 
-console.log( new Builder().addWalls().addRoof().addDoor().execute() )
+    saveOnServer ( charecter )
+    {
+        //*...
+    }
+}
