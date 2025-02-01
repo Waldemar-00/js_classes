@@ -1,32 +1,32 @@
 'use strict'
-
-//! Dependency Inversion Principle
-
-class DB
+function require (id)
 {
-    save ( items )
+    const request = new XMLHttpRequest()
+    request.open( 'GET', `https://dummyjson.com/products/${ id ? id: '' }`, {
+        "content-type": "application/json"
+    } )
+    request.send()
+
+    request.addEventListener( 'load', function ()
     {
-        console.log( `Saved: ${ items }` )
-    }
+        let acc = 0
+        const data = JSON.parse( this.responseText )
+        if ( Array.isArray( data?.products ) )
+        {
+            data.products.forEach( prod =>
+                {
+                    acc += prod.price
+                } )
+            console.log( `Total price: ${ acc }` )
+        } else
+        {
+            console.log( data.price )
+        }
+
+    } )
 }
 
-class MongoDB extends DB
-{
-    save ( items )
-    {
-        console.log( `Saved to MongoDB: ${ items }` )
-    }
-}
-class TodoList
-{
-    items = [ 1, 2, 3 ]
-    //! db = new DB() we have to rewrite each time when we want to change a DB
-    constructor ( db )
-    {
-        this.db = db
-    }
-    saveToDB () { this.db.save( this.items ) }
-}
-
-new TodoList( new DB ).saveToDB()
-new TodoList( new MongoDB ).saveToDB()
+require( '' )
+require( 1 )
+require( 3 )
+require()
