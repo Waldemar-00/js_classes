@@ -1,23 +1,50 @@
 'use strict'
+//! Parallel Requests
 
-//! ASYNC and SYC code
-
-
-async function getCategories ()
+async function getAllProducts ( url )
 {
-    try {
-        const response = await fetch( `https://dummyjson.com/products/categories` )
-        if(!response.ok) throw new Error()
-        return await response.json()
-    } catch (error) {
-        console.error( error )
-        throw error //! If you need to get up the Error
-    }
+    const response = await fetch( url )
+    const { products } = await response.json()
+    return products
 }
 
-( async () =>
+async function getById ( url, id )
 {
-    console.log('Start')
-    console.log( await getCategories() )
-    console.log('End')
-})()
+    const response = await fetch( `${ url }/${ id }` )
+    const productById = await response.json()
+    return productById
+}
+
+async function getEveryProduct ( url )
+{
+    const products = await getAllProducts( url )
+    //! Sequential queries
+    //* for( let product of products )
+    //* {
+    //*     const productById = await getById ( url, product.id )
+    //*     console.log( productById )
+    //* }
+    //! Parallel - all or no one
+    //* const allProducts = await Promise.all( products.map( product =>
+    //* {
+    //*     return getById( url, product.id )
+    //* } ) )
+    //* console.log( allProducts )
+    //! Parallel - all even if some of them return error
+    // //! Every product will contains status -'fulfilled' and value or status 'rejected' and 'reason'
+    //* const allProducts = await Promise.allSettled( products.map( product =>
+    //* {
+    //*     return getById( url, product.id )
+    //* } ) )
+    //* console.log( allProducts )
+    //! Promise.race
+    //! Only one promise, which will be resolved the first
+    const allProducts = await Promise.race( products.map( product =>
+    {
+        return getById( url, product.id )
+    } ) )
+    console.log( allProducts )
+
+}
+
+getEveryProduct( `https://dummyjson.com/products` )
