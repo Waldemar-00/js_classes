@@ -1,0 +1,28 @@
+.funnyCards {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    height: 100vh
+}
+.card {
+    width: 25vw;
+    height: 50vh;
+    color: white;
+    background-color: #ff4949;
+    padding: 1rem;
+    font-size: 20px
+}
+.btn_jokes {
+    background-color: red;
+    color: white;
+    padding: 1rem 0.5rem;
+    border: none;
+    width: 200px;
+    margin: 50px 50px 0px 50px;
+    font-size: 20px;
+    border-radius: 2px;
+
+}
